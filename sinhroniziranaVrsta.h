@@ -9,27 +9,27 @@
 # include <mutex >
 # include <condition_variable >
 template < typename T >
-class SinhroniziranaVrsta {
+class sinhroniziranaVrsta {
 public :
-    SinhroniziranaVrsta (){}
+    sinhroniziranaVrsta (){}
     void vstavi ( const T & podatki );
     T beri ();
 private :
-    SinhroniziranaVrsta ( const SinhroniziranaVrsta &);
-    SinhroniziranaVrsta & operator =( const SinhroniziranaVrsta &);
+    sinhroniziranaVrsta (const sinhroniziranaVrsta &);
+    sinhroniziranaVrsta & operator =(const sinhroniziranaVrsta &);
     std :: list <T > vrsta ;
     std :: mutex mojMutex ;
     std :: conditionVariable mojCv ;
 };
 
 template < typename T >
-void SinhroniziranaVrsta <T >:: vstavi ( const T& podatki ){
+void sinhroniziranaVrsta <T >:: vstavi (const T& podatki ){
     std :: unique_lock < std :: mutex > lck ( mojMutex );
     vrsta . push_back ( podatki );
     mojCv . notify_one ();
 }
 template < typename T >
-T SinhroniziranaVrsta <T >:: beri (){
+T sinhroniziranaVrsta <T >:: beri (){
     std :: unique_lock < std :: mutex > lck ( mojMutex );
     while ( vrsta . empty ()) mojCv . wait ( lck );
     T result = vrsta . front ();

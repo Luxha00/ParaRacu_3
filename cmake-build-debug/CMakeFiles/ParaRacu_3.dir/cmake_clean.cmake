@@ -1,7 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/ParaRacu_3.dir/main.cpp.o"
-  "ParaRacu_3"
+  "CMakeFiles/ParaRacu_3.dir/main.cpp.obj"
+  "ParaRacu_3.exe"
+  "ParaRacu_3.exe.manifest"
   "ParaRacu_3.pdb"
+  "libParaRacu_3.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
