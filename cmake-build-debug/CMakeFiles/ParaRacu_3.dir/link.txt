@@ -1,0 +1,1 @@
+/usr/bin/c++ -pthread -g CMakeFiles/ParaRacu_3.dir/main.cpp.o -o ParaRacu_3 
