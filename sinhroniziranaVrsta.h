@@ -14,12 +14,13 @@ public :
     sinhroniziranaVrsta (){}
     void vstavi ( const T & podatki );
     T beri ();
+    bool empty ();
 private :
     sinhroniziranaVrsta (const sinhroniziranaVrsta &);
     sinhroniziranaVrsta & operator =(const sinhroniziranaVrsta &);
     std :: list <T > vrsta ;
     std :: mutex mojMutex ;
-    std :: conditionVariable mojCv ;
+    std :: condition_variable mojCv ;
 };
 
 template < typename T >
@@ -36,6 +37,13 @@ T sinhroniziranaVrsta <T >:: beri (){
     vrsta . pop_front ();
     return result ;
 }
-# end
+
+template < typename T >
+bool sinhroniziranaVrsta <T>:: empty(){
+    if(vrsta.empty()){
+        return true;
+    }
+    else return false;
+}
 
 #endif //PARARACU_3_SINHRONIZIRANAVRSTA_H

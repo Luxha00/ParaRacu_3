@@ -149,6 +149,60 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles\ParaRacu_3.dir\build.make CMakeFiles/ParaRacu_3.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+nit.obj: nit.cpp.obj
+
+.PHONY : nit.obj
+
+# target to build an object file
+nit.cpp.obj:
+	$(MAKE) -f CMakeFiles\ParaRacu_3.dir\build.make CMakeFiles/ParaRacu_3.dir/nit.cpp.obj
+.PHONY : nit.cpp.obj
+
+nit.i: nit.cpp.i
+
+.PHONY : nit.i
+
+# target to preprocess a source file
+nit.cpp.i:
+	$(MAKE) -f CMakeFiles\ParaRacu_3.dir\build.make CMakeFiles/ParaRacu_3.dir/nit.cpp.i
+.PHONY : nit.cpp.i
+
+nit.s: nit.cpp.s
+
+.PHONY : nit.s
+
+# target to generate assembly for a file
+nit.cpp.s:
+	$(MAKE) -f CMakeFiles\ParaRacu_3.dir\build.make CMakeFiles/ParaRacu_3.dir/nit.cpp.s
+.PHONY : nit.cpp.s
+
+reaktor.obj: reaktor.cpp.obj
+
+.PHONY : reaktor.obj
+
+# target to build an object file
+reaktor.cpp.obj:
+	$(MAKE) -f CMakeFiles\ParaRacu_3.dir\build.make CMakeFiles/ParaRacu_3.dir/reaktor.cpp.obj
+.PHONY : reaktor.cpp.obj
+
+reaktor.i: reaktor.cpp.i
+
+.PHONY : reaktor.i
+
+# target to preprocess a source file
+reaktor.cpp.i:
+	$(MAKE) -f CMakeFiles\ParaRacu_3.dir\build.make CMakeFiles/ParaRacu_3.dir/reaktor.cpp.i
+.PHONY : reaktor.cpp.i
+
+reaktor.s: reaktor.cpp.s
+
+.PHONY : reaktor.s
+
+# target to generate assembly for a file
+reaktor.cpp.s:
+	$(MAKE) -f CMakeFiles\ParaRacu_3.dir\build.make CMakeFiles/ParaRacu_3.dir/reaktor.cpp.s
+.PHONY : reaktor.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -161,6 +215,12 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... nit.obj
+	@echo ... nit.i
+	@echo ... nit.s
+	@echo ... reaktor.obj
+	@echo ... reaktor.i
+	@echo ... reaktor.s
 .PHONY : help
 
 

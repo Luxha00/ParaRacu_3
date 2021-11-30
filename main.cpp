@@ -3,9 +3,11 @@
 #include <mutex>
 #include <condition_variable>
 #include "sinhroniziranaVrsta.h"
+#include "reaktor.h"
 #include <random>
 
 using namespace std;
+using namespace std::chrono;
 
 int seed = 0;
 int nfes = 0;
@@ -22,6 +24,7 @@ vector <vector<int>> kandidati;
 vector <int> bestPSLSequence;
 vector <int> bestMFSequence;
 sinhroniziranaVrsta<vector<int>> vrsta;
+vector<thread>guide;
 
 void getSosede(){
     kandidati.push_back(sosedi[0]);
@@ -61,7 +64,6 @@ void getRandomSequence(int L){
             }
         }
         getSosede();
-        //exeThreads(threads);
         sequence.clear();
         sosedi.clear();
     }
@@ -70,8 +72,10 @@ void getRandomSequence(int L){
 void getPSL(int ckHigh){
     if (ckHigh < PSL){
         myMutex.lock();
-        PSL = ckHigh;
-        bestPSLSequence = sequence;
+        if (ckHigh < PSL) {
+            PSL = ckHigh;
+            bestPSLSequence = sequence;
+        }
         myMutex.unlock();
     }
 }
@@ -109,32 +113,50 @@ void Ck(vector <int> sequence){
     getMF(sequence, ckVsota);
 }
 
-void threadRun(int from, int to){
-    while (from < to){
-        Ck(sosedi[from]);
-        from++;
-    }
+void threadRun(){
+    unique_lock < mutex > lck ( myMutex );
+    if( vrsta.empty()) var.wait ( lck );
+    vector<int> tmp = vrsta.beri();
+    Ck(tmp);
 }
 
 void exeThreads(int threads){
-    vector<thread>guide;
-    int from = 0;
-    int to = L/threads-1;
-    int multi = L/threads;
     for (int i = 0; i < threads; i++){
-        guide.push_back(thread (threadRun, from, to));
-        from = to+1;
-        to += multi;
+        guide.push_back(thread (threadRun));
     }
+}
+
+int main(int argc, char *argv[]) {
+    cout << "enter seed: " << endl;
+    cin >> seed;
+    cout << "enter threads: " << endl;
+    cin >> threads;
+    exeThreads(threads);
+    auto start = high_resolution_clock::now();
+    getRandomSequence(L);
+    auto stop = high_resolution_clock::now();
     for (int i = 0; i < threads; i++){
         guide[i].join();
     }
     for (int i = 0; i < threads; i++){
         guide.pop_back();
     }
-}
-
-int main() {
-
+    auto duration = duration_cast<seconds>(stop - start);
+    cout << "L: " << L << endl;
+    cout << "NfesLmt: " << nfesLmt << endl;
+    cout << "seed: " << seed << endl;
+    cout << "Runtime in seconds:" << duration.count() << endl;
+    double speed = nfesLmt / duration.count();
+    cout << "Speed: " << speed << endl;
+    cout << "\n" << "best PSL: " << PSL << endl;
+    cout << "sequence: " << endl;
+    for (int i = 0; i < L; ++i) {
+        cout << bestPSLSequence[i] << ", ";
+    }
+    cout << "\n" <<"best MF: " << MF << endl;
+    cout << "sequence: " << endl;
+    for (int i = 0; i < L; ++i) {
+        cout << bestMFSequence[i] << ", ";
+    }
     return 0;
 }

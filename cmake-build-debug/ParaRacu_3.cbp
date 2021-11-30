@@ -80,13 +80,22 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Luka Hauko/Documents/GitHub/ParaRacu_3.1/SinhroniziranaVrsta.h">
-			<Option target="ParaRacu_3"/>
-		</Unit>
 		<Unit filename="C:/Users/Luka Hauko/Documents/GitHub/ParaRacu_3.1/main.cpp">
 			<Option target="ParaRacu_3"/>
 		</Unit>
+		<Unit filename="C:/Users/Luka Hauko/Documents/GitHub/ParaRacu_3.1/nit.cpp">
+			<Option target="ParaRacu_3"/>
+		</Unit>
 		<Unit filename="C:/Users/Luka Hauko/Documents/GitHub/ParaRacu_3.1/nit.h">
+			<Option target="ParaRacu_3"/>
+		</Unit>
+		<Unit filename="C:/Users/Luka Hauko/Documents/GitHub/ParaRacu_3.1/reaktor.cpp">
+			<Option target="ParaRacu_3"/>
+		</Unit>
+		<Unit filename="C:/Users/Luka Hauko/Documents/GitHub/ParaRacu_3.1/reaktor.h">
+			<Option target="ParaRacu_3"/>
+		</Unit>
+		<Unit filename="C:/Users/Luka Hauko/Documents/GitHub/ParaRacu_3.1/sinhroniziranaVrsta.h">
 			<Option target="ParaRacu_3"/>
 		</Unit>
 		<Unit filename="C:/Users/Luka Hauko/Documents/GitHub/ParaRacu_3.1/CMakeLists.txt">
