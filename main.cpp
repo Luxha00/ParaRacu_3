@@ -66,6 +66,9 @@ void getRandomSequence(int L){
         getSosede();
         sequence.clear();
         sosedi.clear();
+        cout << nfes << ", ";
+        unique_lock < std :: mutex > lck ( myMutex );
+        while ( !vrsta.empty()) var.wait ( lck );
     }
 }
 
@@ -115,7 +118,7 @@ void Ck(vector <int> sequence){
 
 void threadRun(){
     unique_lock < mutex > lck ( myMutex );
-    if( vrsta.empty()) var.wait ( lck );
+    if( vrsta.empty()) var.wait( lck );
     vector<int> tmp = vrsta.beri();
     Ck(tmp);
 }
