@@ -3,7 +3,6 @@
 #include <mutex>
 #include <condition_variable>
 #include "sinhroniziranaVrsta.h"
-#include "reaktor.h"
 #include <random>
 
 using namespace std;
@@ -54,30 +53,12 @@ void randomize(){
     }
 }
 
-void getRandomSequence(int L){
-    while (nfes < nfesLmt){
-        randomize();
-        for ( int i = 0; i <= L; i++){
-            if(nfes < nfesLmt){
-                sosedi.push_back(sequence);
-                nfes++;
-            }
-        }
-        getSosede();
-        sequence.clear();
-        sosedi.clear();
-        cout << nfes << ", ";
-        unique_lock < std :: mutex > lck ( myMutex );
-        while ( !vrsta.empty()) var.wait ( lck );
-    }
-}
-
-void getPSL(int ckHigh){
+void getPSL(int ckHigh, vector<int> seq){
     if (ckHigh < PSL){
         myMutex.lock();
         if (ckHigh < PSL) {
             PSL = ckHigh;
-            bestPSLSequence = sequence;
+            bestPSLSequence = seq;
         }
         myMutex.unlock();
     }
@@ -112,15 +93,15 @@ void Ck(vector <int> sequence){
         ckVsota += ck2;
         ck = 0;
     }
-    getPSL(ckHigh);
+    getPSL(ckHigh, sequence);
     getMF(sequence, ckVsota);
 }
 
 void threadRun(){
-    unique_lock < mutex > lck ( myMutex );
-    if( vrsta.empty()) var.wait( lck );
-    vector<int> tmp = vrsta.beri();
-    Ck(tmp);
+    while(nfes<nfesLmt){
+        vector<int> tmp = vrsta.beri();
+        Ck(tmp);
+    }
 }
 
 void exeThreads(int threads){
@@ -129,21 +110,45 @@ void exeThreads(int threads){
     }
 }
 
-int main(int argc, char *argv[]) {
-    cout << "enter seed: " << endl;
-    cin >> seed;
-    cout << "enter threads: " << endl;
-    cin >> threads;
+void getRandomSequence(int L) {
     exeThreads(threads);
-    auto start = high_resolution_clock::now();
-    getRandomSequence(L);
-    auto stop = high_resolution_clock::now();
+    while (nfes < nfesLmt) {
+        this_thread::sleep_for(1ms);
+        if (vrsta.vrsta.empty()) {
+            randomize();
+            for (int i = 0; i <= L; i++) {
+                if (nfes < nfesLmt) {
+                    sosedi.push_back(sequence);
+                    nfes++;
+                }
+            }
+            getSosede();
+            sequence.clear();
+            sosedi.clear();
+        }
+    }
     for (int i = 0; i < threads; i++){
         guide[i].join();
     }
     for (int i = 0; i < threads; i++){
         guide.pop_back();
     }
+}
+
+int main(int argc, char *argv[]) {
+    //for (int i = 0; i < argc; ++i)
+    //    cout << argv[i] << "\n";
+    //L = reinterpret_cast<int>(argv[0]);
+    //seed = reinterpret_cast<int>(argv[1]);
+    //nfesLmt = reinterpret_cast<int>(argv[2]);
+    cout << "enter seed: " << endl;
+    cin >> seed;
+    cout << "enter threads: " << endl;
+    cin >> threads;
+    auto start = high_resolution_clock::now();
+    thread a(getRandomSequence, L);
+    a.join();
+    auto stop = high_resolution_clock::now();
     auto duration = duration_cast<seconds>(stop - start);
     cout << "L: " << L << endl;
     cout << "NfesLmt: " << nfesLmt << endl;

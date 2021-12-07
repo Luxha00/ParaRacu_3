@@ -15,10 +15,11 @@ public :
     void vstavi ( const T & podatki );
     T beri ();
     bool empty ();
+    int vrstaSize();
+    std :: list <T > vrsta ;
 private :
     sinhroniziranaVrsta (const sinhroniziranaVrsta &);
     sinhroniziranaVrsta & operator =(const sinhroniziranaVrsta &);
-    std :: list <T > vrsta ;
     std :: mutex mojMutex ;
     std :: condition_variable mojCv ;
 };
@@ -44,6 +45,11 @@ bool sinhroniziranaVrsta <T>:: empty(){
         return true;
     }
     else return false;
+}
+
+template <typename T>
+int sinhroniziranaVrsta <T>:: vrstaSize() {
+    return vrsta.size();
 }
 
 #endif //PARARACU_3_SINHRONIZIRANAVRSTA_H
